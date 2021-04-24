@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "875763224890",
+    "project_id": "prueba-tecnica-tul",
+    "storage_bucket": "prueba-tecnica-tul.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875763224890:android:09fce54eeaae7c87fac003",
+        "android_client_info": {
+          "package_name": "com.jmj.pruebatecnicajuan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875763224890-3os5kodl3f0c6426sdqlpmj3acdohndl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQwOEaXfsxLOiyfmDHFCyB4ippcK65yvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875763224890-3os5kodl3f0c6426sdqlpmj3acdohndl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "875763224890-5hb8ucaga3votn0me9qpj2cka0auci07.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jmj.pruebatecnicajuan"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
