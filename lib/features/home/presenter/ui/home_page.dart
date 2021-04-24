@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_tecnica_juan/features/home/presenter/bloc/bloc.dart';
+import 'package:prueba_tecnica_juan/features/orders/presenter/presenter.dart';
+import 'package:prueba_tecnica_juan/features/shopping_cart/presenter/presenter.dart';
 
-import 'card_products.dart';
+import 'store_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -14,31 +16,102 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ShoppingCartInjection(),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       drawer: Drawer(
         child: Column(
           children: [
             Container(
-              color: Colors.blue,
-              height: 200,
-            )
+                color: const Color(0xFFF4C459),
+                height: 200,
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 20),
+                child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Expanded(
+                        flex: 3,
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundColor: Colors.white,
+                          child: Text('J'),
+                        ),
+                      ),
+                      const Spacer(),
+                      const Expanded(
+                        flex: 1,
+                        child: Text('Juan Manuel Jaramillo Henao '),
+                      )
+                    ],
+                  ),
+                )),
+            ListTile(
+              title: const Text('Productos'),
+              trailing: const Icon(Icons.arrow_forward_ios_outlined),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              title: const Text('Ordenes'),
+              trailing: const Icon(Icons.arrow_forward_ios_outlined),
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const OrdersInjection(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Carrito de compras'),
+              trailing: const Icon(Icons.arrow_forward_ios_outlined),
+              onTap: () async {
+                Navigator.pop(context);
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShoppingCartInjection(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeCompleteState) {
-            return GridView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: state.products.length,
-              itemBuilder: (context, index) => CardProducts(
-                product: state.products[index],
+            return ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(
+                  30,
+                ),
+                bottomRight: Radius.circular(
+                  30,
+                ),
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 5.0,
-                mainAxisSpacing: 5.0,
-                childAspectRatio: 0.8,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: StoreList(
+                  listProduct: state.products,
+                ),
               ),
             );
           } else if (state is HomeLoadingState) {

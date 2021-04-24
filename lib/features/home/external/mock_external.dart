@@ -1,3 +1,4 @@
+import 'package:prueba_tecnica_juan/core/domain/entities/product.dart';
 import 'package:prueba_tecnica_juan/features/home/data/data.dart';
 
 class MockExternal implements HomeDataSource {
@@ -21,5 +22,10 @@ class MockExternal implements HomeDataSource {
             'https://fruterox.co/wp-content/uploads/2020/07/Zucchini_verde.jpg',
       ),
     ];
+  }
+
+  @override
+  Future<bool> addProduct(Product product) async {
+    return true;
   }
 }

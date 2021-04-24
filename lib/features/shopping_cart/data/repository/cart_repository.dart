@@ -11,24 +11,6 @@ class CartRepositoryImpl implements CartRepositories {
   final CartDatasource _cartDatasource;
 
   @override
-  Future<Either<CartError, bool>> addProduct(Product product) async {
-    try {
-      final _result = await _cartDatasource.addProduct(product);
-      return Right(_result);
-    } on CartError catch (e) {
-      return Left(e);
-    } on SocketException {
-      return Left(
-        NotConnection(),
-      );
-    } catch (e) {
-      return Left(
-        DefaultError(messageError: e.toString()),
-      );
-    }
-  }
-
-  @override
   Future<Either<CartError, bool>> deleteProduct(Product product) async {
     try {
       final _result = await _cartDatasource.deleteProduct(product);

@@ -7,13 +7,15 @@ class Product extends Equatable {
     this.sku,
     this.description,
     this.urlImage,
+    this.quantity,
   });
   final int id;
   final String name;
   final String sku;
   final String description;
   final String urlImage;
+  final int quantity;
 
   @override
-  List<Object> get props => [id, name, sku, description, urlImage];
+  List<Object> get props => [id, name, sku, description, urlImage, quantity];
 }

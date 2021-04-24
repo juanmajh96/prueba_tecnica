@@ -27,4 +27,22 @@ class HomeRepositoryImpl implements HomeRepositories {
       );
     }
   }
+
+  @override
+  Future<Either<HomeError, bool>> addProduct(Product product) async {
+    try {
+      final _result = await _homeDataSource.addProduct(product);
+      return Right(_result);
+    } on HomeError catch (e) {
+      return Left(e);
+    } on SocketException {
+      return Left(
+        NotConnection(),
+      );
+    } catch (e) {
+      return Left(
+        DefaultError(messageError: e.toString()),
+      );
+    }
+  }
 }

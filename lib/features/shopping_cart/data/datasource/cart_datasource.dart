@@ -3,7 +3,6 @@ import 'package:prueba_tecnica_juan/features/shopping_cart/data/models/models.da
 
 abstract class CartDatasource {
   Future<List<ProductCartModel>> readProductdasource();
-  Future<bool> addProduct(Product product);
   Future<bool> deleteProduct(Product product);
   Future<bool> updateProduct(Product product);
 }

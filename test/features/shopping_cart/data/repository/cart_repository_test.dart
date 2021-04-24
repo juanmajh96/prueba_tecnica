@@ -62,48 +62,6 @@ void main() {
     });
   });
 
-  group('AddProduct', () {
-    test('It should return true, if datasource was successful', () async {
-      when(_datasource.addProduct(any)).thenAnswer(
-        (_) async => true,
-      );
-
-      final _result = await _repositoryImpl.addProduct(product);
-
-      expect(_result.fold(id, id), isTrue);
-      verify(_repositoryImpl.addProduct(any)).called(1);
-    });
-
-    group('Test when unsuccessful', () {
-      test('If there are DatasourceError , should return HomeError', () async {
-        when(_datasource.addProduct(any)).thenThrow(DataSourceError());
-
-        final _result = await _repositoryImpl.addProduct(product);
-
-        expect(_result.fold(id, id), isA<CartError>());
-        verify(_repositoryImpl.addProduct(any)).called(1);
-      });
-
-      test('If there is not internet should return NotConnection', () async {
-        when(_datasource.addProduct(any)).thenThrow(const SocketException(''));
-
-        final _result = await _repositoryImpl.addProduct(product);
-
-        expect(_result.fold(id, id), isA<NotConnection>());
-        verify(_repositoryImpl.addProduct(any)).called(1);
-      });
-
-      test('If there are any error , should return DefaultError', () async {
-        when(_datasource.addProduct(any)).thenThrow(ArgumentError());
-
-        final _result = await _repositoryImpl.addProduct(product);
-
-        expect(_result.fold(id, id), isA<DefaultError>());
-        verify(_repositoryImpl.addProduct(any)).called(1);
-      });
-    });
-  });
-
   group('UpdateProduct', () {
     test('It should return true, if datasource was successful', () async {
       when(_datasource.updateProduct(any)).thenAnswer(

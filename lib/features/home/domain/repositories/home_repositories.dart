@@ -4,4 +4,5 @@ import 'package:prueba_tecnica_juan/features/home/domain/errors/errors.dart';
 
 abstract class HomeRepositories {
   Future<Either<HomeError, List<Product>>> getProducts();
+  Future<Either<HomeError, bool>> addProduct(Product product);
 }

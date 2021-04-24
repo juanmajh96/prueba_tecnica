@@ -3,15 +3,16 @@ import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
 import 'package:prueba_tecnica_juan/features/home/domain/errors/errors.dart';
 import 'package:prueba_tecnica_juan/features/home/domain/repositories/repositories.dart';
 
-abstract class GetProducts<Output> {
-  Future<Either<HomeError, Output>> call();
+abstract class AddProduct<Output, Input> {
+  Future<Either<HomeError, Output>> call(Input product);
 }
 
-class GetProductsImpl implements GetProducts<List<Product>> {
-  GetProductsImpl(this._repositories);
+class AddProductImpl implements AddProduct<bool, Product> {
+  AddProductImpl(this._repositories);
   final HomeRepositories _repositories;
 
   @override
-  Future<Either<HomeError, List<Product>>> call() async =>
-      await _repositories.getProducts();
+  Future<Either<HomeError, bool>> call(Product product) async {
+    return await _repositories.addProduct(product);
+  }
 }

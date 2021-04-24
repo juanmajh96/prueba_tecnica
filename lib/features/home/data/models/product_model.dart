@@ -1,6 +1,21 @@
+import 'dart:convert';
+
 import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
 
 class ProductModel extends Product {
+  factory ProductModel.fromMap(Map<String, dynamic> map) {
+    return ProductModel(
+      id: map['id'],
+      name: map['name'],
+      sku: map['sku'],
+      description: map['description'],
+      urlImage: map['urlImage'],
+    );
+  }
+
+  factory ProductModel.fromJson(String source) =>
+      ProductModel.fromMap(json.decode(source));
+
   ProductModel({
     this.id,
     this.name,

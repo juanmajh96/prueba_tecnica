@@ -15,7 +15,7 @@ class HomeInjection extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<HomeDataSource>(
-          create: (context) => MockExternal(),
+          create: (context) => FirebaseHome(),
         ),
         RepositoryProvider<HomeRepositories>(
           create: (context) => HomeRepositoryImpl(

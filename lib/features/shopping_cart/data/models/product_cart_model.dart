@@ -7,6 +7,7 @@ class ProductCartModel extends Product {
     this.sku,
     this.description,
     this.urlImage,
+    this.quantity,
   });
   @override
   final int id;
@@ -18,4 +19,6 @@ class ProductCartModel extends Product {
   final String description;
   @override
   final String urlImage;
+  @override
+  final int quantity;
 }
