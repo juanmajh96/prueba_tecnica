@@ -19,7 +19,7 @@ $ genhtml coverage/lcov.info -o coverage/
 $ open coverage/index.html
 ```
 
-## Getting Started  🚀
+## Descarga e instalación  🚀
 
 Primero, clone el repositorio con el comando 'clone', o simplemente descargue el zip.
 
