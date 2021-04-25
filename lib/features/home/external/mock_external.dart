@@ -6,7 +6,7 @@ class MockExternal implements HomeDataSource {
   Future<List<ProductModel>> getDatasource() async {
     return [
       ProductModel(
-        id: 1,
+        id: 'fiOSOdOIXKmdo5CmpCdA',
         name: 'Sukini Amarillo',
         sku: 'SI6A',
         description: 'Prueba',
@@ -14,7 +14,7 @@ class MockExternal implements HomeDataSource {
             'https://fruverya.co/wp-content/uploads/2018/10/zuquniama.jpg',
       ),
       ProductModel(
-        id: 2,
+        id: '31cFUTtGErM9C8PI5XTe',
         name: 'Sukini Verde',
         sku: 'SI6V',
         description: 'Prueba',

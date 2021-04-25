@@ -71,6 +71,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Ordenes'),
               trailing: const Icon(Icons.arrow_forward_ios_outlined),
               onTap: () async {
+                Navigator.pop(context);
                 await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const OrdersInjection(),

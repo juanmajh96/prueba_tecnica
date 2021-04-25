@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
+import 'package:prueba_tecnica_juan/features/home/domain/repositories/repositories.dart';
 
 import 'details_products.dart';
 import 'dual_view.dart';
@@ -25,11 +27,14 @@ class StoreList extends StatelessWidget {
               await Navigator.of(context).push(
                 PageRouteBuilder(
                   transitionDuration: const Duration(milliseconds: 800),
-                  pageBuilder: (context, animation, __) {
+                  pageBuilder: (_, animation, __) {
                     return FadeTransition(
                       opacity: animation,
                       child: ProductDetails(
                         product: product,
+                        homeRepositories:
+                            RepositoryProvider.of<HomeRepositories>(context,
+                                listen: false),
                       ),
                     );
                   },

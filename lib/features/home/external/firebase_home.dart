@@ -19,8 +19,11 @@ class FirebaseHome implements HomeDataSource {
   }
 
   @override
-  Future<bool> addProduct(Product product) {
-    // TODO: implement addProduct
-    throw UnimplementedError();
+  Future<bool> addProduct(Product product) async {
+    await FirebaseFirestore.instance
+        .collection('cart')
+        .doc(product.id)
+        .set(ProductModel().toMap(product), SetOptions(merge: false));
+    return true;
   }
 }

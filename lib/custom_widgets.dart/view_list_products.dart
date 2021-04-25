@@ -18,12 +18,19 @@ class ViewListProducts extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          Text(item.quantity.toString()),
+          Text(item.quantity.quantity.toString()),
           const SizedBox(width: 10),
           const Text('x'),
           const SizedBox(width: 10),
-          Text(item.name),
-          const Spacer(),
+          Expanded(
+              flex: 3,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(item.name),
+              )),
+          const Spacer(
+            flex: 1,
+          ),
         ],
       ),
     );

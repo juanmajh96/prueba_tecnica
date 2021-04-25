@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prueba_tecnica_juan/features/shopping_cart/presenter/cubit/cubit.dart';
 import 'package:prueba_tecnica_juan/features/shopping_cart/shopping_cart.dart';
 
 import 'bloc/bloc.dart';
@@ -13,7 +14,7 @@ class ShoppingCartInjection extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<CartDatasource>(
-          create: (context) => MockCartExternal(),
+          create: (context) => FirebaseCartExternal(),
         ),
         RepositoryProvider<CartRepositories>(
           create: (context) => CartRepositoryImpl(
@@ -25,13 +26,38 @@ class ShoppingCartInjection extends StatelessWidget {
             context.read<CartRepositories>(),
           ),
         ),
-      ],
-      child: BlocProvider<CartBloc>(
-        create: (BuildContext context) => CartBloc(
-          context.read<ReadProduct>(),
-        )..add(
-            LoadDataEvent(),
+        RepositoryProvider<UpdateProduct>(
+          create: (context) => UpdateProductImpl(
+            context.read<CartRepositories>(),
           ),
+        ),
+        RepositoryProvider<DeleteProduct>(
+          create: (context) => DeleteProductImpl(
+            context.read<CartRepositories>(),
+          ),
+        ),
+        RepositoryProvider<CreateOrder>(
+          create: (context) => CreateOrderImpl(
+            context.read<CartRepositories>(),
+          ),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<CartBloc>(
+            create: (BuildContext context) => CartBloc(
+              context.read<ReadProduct>(),
+              context.read<UpdateProduct>(),
+              context.read<DeleteProduct>(),
+              context.read<CreateOrder>(),
+            )..add(
+                LoadDataEvent(),
+              ),
+          ),
+          BlocProvider<QuantityCubit>(
+            create: (BuildContext context) => QuantityCubit(),
+          ),
+        ],
         child: const CartPage(),
       ),
     );

@@ -28,7 +28,7 @@ class OrdersPage extends StatelessWidget {
                 final items = state.orders[index];
                 return ExpansionTile(
                   title: Text(
-                    items.total.toString(),
+                    items.name.toDate().toString(),
                     style: const TextStyle(
                         fontSize: 16.0, fontWeight: FontWeight.w500),
                   ),

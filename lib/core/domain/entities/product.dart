@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:prueba_tecnica_juan/core/domain/entities/quantity.dart';
 
 class Product extends Equatable {
   Product({
@@ -9,12 +10,12 @@ class Product extends Equatable {
     this.urlImage,
     this.quantity,
   });
-  final int id;
+  final String id;
   final String name;
   final String sku;
   final String description;
   final String urlImage;
-  final int quantity;
+  final Quantity quantity;
 
   @override
   List<Object> get props => [id, name, sku, description, urlImage, quantity];

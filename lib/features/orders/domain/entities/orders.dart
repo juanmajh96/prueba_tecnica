@@ -1,12 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
 
 class Orders {
   Orders({
-    this.quantity,
-    this.total,
+    this.name,
     this.listProduct,
   });
-  final int quantity;
-  final int total;
+
+  final Timestamp name;
   final List<Product> listProduct;
 }

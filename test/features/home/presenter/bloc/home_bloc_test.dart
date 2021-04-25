@@ -15,9 +15,11 @@ void main() {
 
   setUp(() {
     _usecase = GetProductsMock();
-    _homeBloc = HomeBloc(_usecase);
+    _homeBloc = HomeBloc(
+      _usecase,
+    );
     _listProduct = <Product>[
-      Product(description: '', id: 1, name: '', sku: '', urlImage: '')
+      Product(description: '', id: '1', name: '', sku: '', urlImage: '')
     ];
   });
 
@@ -54,7 +56,7 @@ void main() {
           HomeLoadingState(),
           HomeCompleteState(
             <Product>[
-              Product(description: '', id: 1, name: '', sku: '', urlImage: '')
+              Product(description: '', id: '1', name: '', sku: '', urlImage: '')
             ],
           ),
         ],

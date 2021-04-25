@@ -5,5 +5,6 @@ import 'package:prueba_tecnica_juan/features/shopping_cart/domain/errors/errors.
 abstract class CartRepositories {
   Future<Either<CartError, bool>> deleteProduct(Product product);
   Future<Either<CartError, bool>> updateProduct(Product product);
+  Future<Either<CartError, bool>> createOrder(List<Product> productList);
   Future<Either<CartError, List<Product>>> readProduct();
 }

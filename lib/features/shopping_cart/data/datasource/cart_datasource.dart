@@ -5,4 +5,5 @@ abstract class CartDatasource {
   Future<List<ProductCartModel>> readProductdasource();
   Future<bool> deleteProduct(Product product);
   Future<bool> updateProduct(Product product);
+  Future<bool> createOrder(List<Product> productList);
 }

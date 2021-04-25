@@ -9,8 +9,17 @@ abstract class CartEvent extends Equatable {
 
 class LoadDataEvent extends CartEvent {}
 
-class AddEvent extends CartEvent {}
+class UpdateDataEvent extends CartEvent {
+  UpdateDataEvent({@required this.product});
+  final Product product;
+}
 
-class UpdateDataEvent extends CartEvent {}
+class DeleteEvent extends CartEvent {
+  DeleteEvent({@required this.product});
+  final Product product;
+}
 
-class DeleteEvent extends CartEvent {}
+class CreateOrderEvent extends CartEvent {
+  CreateOrderEvent({@required this.productList});
+  final List<Product> productList;
+}

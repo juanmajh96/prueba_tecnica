@@ -13,7 +13,7 @@ class OrdersInjection extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<OrdersDataSource>(
-          create: (context) => MockOrdersExternal(),
+          create: (context) => FirebaseOrder(),
         ),
         RepositoryProvider<OrdersRepositories>(
           create: (context) => OrdersRepositoryImpl(

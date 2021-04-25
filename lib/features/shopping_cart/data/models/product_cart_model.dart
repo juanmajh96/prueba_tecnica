@@ -1,6 +1,21 @@
+import 'dart:convert';
+
 import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
 
 class ProductCartModel extends Product {
+  factory ProductCartModel.fromMap(Map<String, dynamic> map) {
+    return ProductCartModel(
+      id: map['id'],
+      name: map['name'],
+      sku: map['sku'],
+      description: map['description'],
+      urlImage: map['urlImage'],
+      quantity: Quantity(quantity: map['quantity']),
+    );
+  }
+  factory ProductCartModel.fromJson(String source) =>
+      ProductCartModel.fromMap(json.decode(source));
+
   ProductCartModel({
     this.id,
     this.name,
@@ -10,7 +25,7 @@ class ProductCartModel extends Product {
     this.quantity,
   });
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   @override
@@ -20,5 +35,16 @@ class ProductCartModel extends Product {
   @override
   final String urlImage;
   @override
-  final int quantity;
+  final Quantity quantity;
+
+  Map<String, dynamic> toMap(Product product) {
+    return {
+      'id': product.id,
+      'name': product.name,
+      'sku': product.sku,
+      'description': product.description,
+      'urlImage': product.urlImage,
+      'quantity': product.quantity.quantity,
+    };
+  }
 }

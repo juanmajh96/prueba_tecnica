@@ -10,21 +10,22 @@ class ProductModel extends Product {
       sku: map['sku'],
       description: map['description'],
       urlImage: map['urlImage'],
+      quantity: Quantity(),
     );
   }
 
   factory ProductModel.fromJson(String source) =>
       ProductModel.fromMap(json.decode(source));
 
-  ProductModel({
-    this.id,
-    this.name,
-    this.sku,
-    this.description,
-    this.urlImage,
-  });
+  ProductModel(
+      {this.id,
+      this.name,
+      this.sku,
+      this.description,
+      this.urlImage,
+      this.quantity});
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   @override
@@ -33,4 +34,17 @@ class ProductModel extends Product {
   final String description;
   @override
   final String urlImage;
+  @override
+  final Quantity quantity;
+
+  Map<String, dynamic> toMap(ProductModel productModel) {
+    return {
+      'id': productModel.id,
+      'name': productModel.name,
+      'sku': productModel.sku,
+      'description': productModel.description,
+      'urlImage': productModel.urlImage,
+      'quantity': productModel.quantity.quantity,
+    };
+  }
 }

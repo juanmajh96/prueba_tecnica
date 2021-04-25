@@ -20,17 +20,22 @@ class CartPage extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      body: BlocBuilder<CartBloc, CartState>(
+      body: BlocConsumer<CartBloc, CartState>(
+        listener: (context, state) {
+          if (state is OrderCreated) {
+            Navigator.pop(context);
+          }
+        },
         builder: (context, state) {
-          if (state is HomeCompleteState) {
+          if (state is CartCompleteState) {
             return CartList(
               listProduct: state.products,
             );
-          } else if (state is HomeLoadingState) {
+          } else if (state is CartLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is HomeNotInternetState) {
+          } else if (state is CartNotInternetState) {
             return const Center(
               child: Text('no hay internet'),
             );

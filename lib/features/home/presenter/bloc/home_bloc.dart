@@ -10,7 +10,9 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this._getProducts) : super(HomeLoadingState());
+  HomeBloc(
+    this._getProducts,
+  ) : super(HomeLoadingState());
 
   final GetProducts<List<Product>> _getProducts;
 

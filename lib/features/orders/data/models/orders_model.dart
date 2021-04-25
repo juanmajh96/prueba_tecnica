@@ -1,16 +1,30 @@
-import 'package:prueba_tecnica_juan/core/domain/entities/entities.dart';
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prueba_tecnica_juan/features/orders/domain/domain.dart';
+import 'package:prueba_tecnica_juan/features/shopping_cart/data/data.dart';
 
 class OrdersModel extends Orders {
+  factory OrdersModel.fromMap(Map<String, dynamic> map) {
+    return OrdersModel(
+      name: map['nameOrder'],
+      listProduct: List<ProductCartModel>.from(
+        map['listProduct'].map(
+          (x) => ProductCartModel.fromMap(x),
+        ),
+      ),
+    );
+  }
+  factory OrdersModel.fromJson(String source) =>
+      OrdersModel.fromMap(json.decode(source));
+
   OrdersModel({
-    this.quantity,
-    this.total,
+    this.name,
     this.listProduct,
   });
+
   @override
-  final int quantity;
+  final Timestamp name;
   @override
-  final int total;
-  @override
-  final List<Product> listProduct;
+  final List<ProductCartModel> listProduct;
 }

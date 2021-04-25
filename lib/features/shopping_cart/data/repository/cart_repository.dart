@@ -63,4 +63,22 @@ class CartRepositoryImpl implements CartRepositories {
       );
     }
   }
+
+  @override
+  Future<Either<CartError, bool>> createOrder(List<Product> productList) async {
+    try {
+      final _result = await _cartDatasource.createOrder(productList);
+      return Right(_result);
+    } on CartError catch (e) {
+      return Left(e);
+    } on SocketException {
+      return Left(
+        NotConnection(),
+      );
+    } catch (e) {
+      return Left(
+        DefaultError(messageError: e.toString()),
+      );
+    }
+  }
 }
