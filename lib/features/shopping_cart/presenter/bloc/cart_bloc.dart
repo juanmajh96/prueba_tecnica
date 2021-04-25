@@ -14,13 +14,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     this._readProduct,
     this._updateProduct,
     this._deleteProduct,
-    this._createOrder,
   ) : super(CartLoadingState());
 
   final ReadProduct<List<Product>> _readProduct;
   final UpdateProduct _updateProduct;
   final DeleteProduct _deleteProduct;
-  final CreateOrder _createOrder;
 
   @override
   Stream<CartState> mapEventToState(
@@ -44,10 +42,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       await _updateProduct(event.product);
     } else if (event is DeleteEvent) {
       await _deleteProduct(event.product);
-    } else if (event is CreateOrderEvent) {
-      yield CartLoadingState();
-      await _createOrder(event.productList);
-      yield OrderCreated();
     }
   }
 }

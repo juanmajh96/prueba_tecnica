@@ -22,6 +22,8 @@ class CartCompleteState extends CartState {
 
 class OrderCreated extends CartState {}
 
+class OrderCreating extends CartState {}
+
 class CartErrorState extends CartState {}
 
 class CartNotInternetState extends CartState {}

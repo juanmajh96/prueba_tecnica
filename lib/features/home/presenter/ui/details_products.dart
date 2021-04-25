@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:prueba_tecnica_juan/core/domain/entities/product.dart';
+import 'package:prueba_tecnica_juan/cubit_main/cubit_main.dart';
 import 'package:prueba_tecnica_juan/features/home/domain/domain.dart';
 import 'package:prueba_tecnica_juan/features/home/presenter/bloc/bloc.dart';
+import 'package:prueba_tecnica_juan/features/home/presenter/cubit/cubit.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -19,16 +21,24 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  int quantity = 1;
-
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<AddProduct>(
       create: (context) => AddProductImpl(widget.homeRepositories),
-      child: BlocProvider<DetailsBloc>(
-        create: (context) => DetailsBloc(
-          context.read<AddProduct>(),
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<DetailsBloc>(
+            create: (context) => DetailsBloc(
+              context.read<AddProduct>(),
+            ),
+          ),
+          BlocProvider<HeroTagCubit>(
+            create: (context) => HeroTagCubit(),
+          ),
+          BlocProvider<QuantityCubit>(
+            create: (context) => QuantityCubit(),
+          )
+        ],
         child: Scaffold(
           appBar: AppBar(
             leading: const BackButton(color: Colors.black),
@@ -48,14 +58,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child: Hero(
-                              tag: 'list_${widget.product.id}',
-                              child: Image.network(
-                                widget.product.urlImage,
-                                fit: BoxFit.contain,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.36,
-                              ),
+                            child: BlocBuilder<HeroTagCubit, String>(
+                              builder: (context, state) {
+                                return Hero(
+                                  tag: 'list_${widget.product.id}$state',
+                                  child: Image.network(
+                                    widget.product.urlImage,
+                                    fit: BoxFit.contain,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.36,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           Text(
@@ -76,45 +90,49 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   borderRadius: BorderRadius.circular(25),
                                   color: Colors.grey[200],
                                 ),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    IconButton(
-                                      onPressed: () {
-                                        if (quantity > 1) {
-                                          setState(() {
-                                            quantity--;
-                                          });
-                                        }
+                                child: Builder(
+                                  builder: (context) {
+                                    final _quantityCubit =
+                                        BlocProvider.of<QuantityCubit>(context,
+                                            listen: false);
+                                    return BlocBuilder<QuantityCubit, int>(
+                                      builder: (context, quantity) {
+                                        return Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            IconButton(
+                                              onPressed:
+                                                  _quantityCubit.subtractAmount,
+                                              icon: const Icon(
+                                                Icons.remove,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0),
+                                              child: Text(
+                                                quantity.toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed:
+                                                  _quantityCubit.addAmount,
+                                              icon: const Icon(
+                                                Icons.add,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                          ],
+                                        );
                                       },
-                                      icon: const Icon(
-                                        Icons.remove,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: Text(
-                                        quantity.toString(),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          quantity++;
-                                        });
-                                      },
-                                      icon: const Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                  ],
+                                    );
+                                  },
                                 ),
                               ),
                               const Spacer(),
@@ -160,36 +178,71 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Navigator.of(context).pop();
                             }
                           },
-                          builder: (context, state) => RaisedButton(
-                            color: const Color(0xFFF4C459),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            onPressed: () {
-                              widget.product.quantity.quantity =
-                                  widget.product.quantity.quantity + quantity;
-                              BlocProvider.of<DetailsBloc>(context,
-                                      listen: false)
-                                  .add(
-                                AddProductEvent(product: widget.product),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: state is DetailsLoading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : const Text(
-                                      'Agregar al carrito',
-                                      style: TextStyle(
-                                        color: Colors.black,
+                          builder: (context, state) {
+                            final _heroTag = BlocProvider.of<HeroTagCubit>(
+                              context,
+                              listen: false,
+                            );
+                            final _objectInCartCubit =
+                                BlocProvider.of<ObjectInCartCubit>(context,
+                                    listen: false);
+                            final _quantityCubit =
+                                BlocProvider.of<QuantityCubit>(context,
+                                    listen: false);
+                            final _detailsBloc = BlocProvider.of<DetailsBloc>(
+                                context,
+                                listen: false);
+                            return state is DetailsLoading
+                                ? RaisedButton(
+                                    color: const Color(0xFFF4C459),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    onPressed: () {},
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 15.0),
+                                      child: SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(),
                                       ),
                                     ),
-                            ),
-                          ),
+                                  )
+                                : RaisedButton(
+                                    color: const Color(0xFFF4C459),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    onPressed: () {
+                                      _heroTag.changeHeroTag('Cart');
+
+                                      _objectInCartCubit.changeWidget(
+                                        ObjectInCartAdded(
+                                            widget.product.urlImage,
+                                            widget.product.id),
+                                      );
+                                      widget.product.quantity.quantity =
+                                          widget.product.quantity.quantity +
+                                              _quantityCubit.state;
+
+                                      _detailsBloc.add(
+                                        AddProductEvent(
+                                            product: widget.product),
+                                      );
+                                    },
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 15.0),
+                                      child: Text(
+                                        'Agregar al carrito',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                          },
                         ),
                       ),
                     ],

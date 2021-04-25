@@ -20,6 +20,8 @@ class DeleteEvent extends CartEvent {
 }
 
 class CreateOrderEvent extends CartEvent {
-  CreateOrderEvent({@required this.productList});
+  CreateOrderEvent({
+    @required this.productList,
+  });
   final List<Product> productList;
 }

@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'cubit_main/cubit_main.dart';
 import 'features/home/presenter/presenter.dart';
 
 void main() async {
@@ -14,9 +16,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Material App',
-      home: HomeInjection(),
+    return BlocProvider<ObjectInCartCubit>(
+      create: (context) => ObjectInCartCubit(),
+      child: const MaterialApp(
+        home: HomeInjection(),
+      ),
     );
   }
 }

@@ -49,10 +49,14 @@ class ShoppingCartInjection extends StatelessWidget {
               context.read<ReadProduct>(),
               context.read<UpdateProduct>(),
               context.read<DeleteProduct>(),
-              context.read<CreateOrder>(),
             )..add(
                 LoadDataEvent(),
               ),
+          ),
+          BlocProvider<CreateOrderCubit>(
+            create: (BuildContext context) => CreateOrderCubit(
+              context.read<CreateOrder>(),
+            ),
           ),
           BlocProvider<QuantityCubit>(
             create: (BuildContext context) => QuantityCubit(),

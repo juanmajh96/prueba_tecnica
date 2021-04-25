@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prueba_tecnica_juan/cubit_main/cubit_main.dart';
 import 'package:prueba_tecnica_juan/features/home/presenter/bloc/bloc.dart';
 import 'package:prueba_tecnica_juan/features/orders/presenter/presenter.dart';
 import 'package:prueba_tecnica_juan/features/shopping_cart/presenter/presenter.dart';
@@ -17,17 +18,45 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
         actions: [
-          IconButton(
-            onPressed: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ShoppingCartInjection(),
+          BlocConsumer<ObjectInCartCubit, ObjectInCartState>(
+            listener: (context, state) async {
+              await Future.delayed(const Duration(milliseconds: 650));
+              BlocProvider.of<ObjectInCartCubit>(context, listen: false)
+                  .changeWidget(
+                ObjectInCartInitial(),
+              );
+            },
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ShoppingCartInjection(),
+                    ),
+                  );
+                },
+                icon: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  ),
+                  child: state is ObjectInCartAdded
+                      ? Hero(
+                          tag: 'list_${state.id}Cart',
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: NetworkImage(
+                              state.urlImage,
+                            ),
+                          ),
+                        )
+                      : const Icon(
+                          Icons.shopping_cart_outlined,
+                        ),
                 ),
               );
             },
-            icon: const Icon(
-              Icons.shopping_cart_outlined,
-            ),
           ),
           const SizedBox(
             width: 20,
