@@ -10,7 +10,7 @@ class ProductCartModel extends Product {
       sku: map['sku'],
       description: map['description'],
       urlImage: map['urlImage'],
-      quantity: Quantity(quantity: map['quantity']),
+      quantity: Quantity(map['quantity']),
     );
   }
   factory ProductCartModel.fromJson(String source) =>

@@ -17,7 +17,7 @@ class MockOrdersExternal implements OrdersDataSource {
               description: 'Prueba',
               urlImage:
                   'https://fruverya.co/wp-content/uploads/2018/10/zuquniama.jpg',
-              quantity: Quantity(quantity: 1)),
+              quantity: Quantity(1)),
           ProductCartModel(
               id: '2',
               name: 'Sukini Verde',
@@ -25,7 +25,7 @@ class MockOrdersExternal implements OrdersDataSource {
               description: 'Prueba',
               urlImage:
                   'https://fruterox.co/wp-content/uploads/2020/07/Zucchini_verde.jpg',
-              quantity: Quantity(quantity: 1)),
+              quantity: Quantity(1)),
         ],
       )
     ];

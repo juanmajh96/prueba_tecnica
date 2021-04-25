@@ -12,6 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _objectInCartAdded =
+        BlocProvider.of<ObjectInCartCubit>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -21,8 +23,7 @@ class HomePage extends StatelessWidget {
           BlocConsumer<ObjectInCartCubit, ObjectInCartState>(
             listener: (context, state) async {
               await Future.delayed(const Duration(milliseconds: 650));
-              BlocProvider.of<ObjectInCartCubit>(context, listen: false)
-                  .changeWidget(
+              _objectInCartAdded.changeWidget(
                 ObjectInCartInitial(),
               );
             },
@@ -103,7 +104,9 @@ class HomePage extends StatelessWidget {
                 Navigator.pop(context);
                 await Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const OrdersInjection(),
+                    builder: (context) => const OrdersInjection(
+                      key: Key('OrdersInjection'),
+                    ),
                   ),
                 );
               },

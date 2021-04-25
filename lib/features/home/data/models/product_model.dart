@@ -10,7 +10,7 @@ class ProductModel extends Product {
       sku: map['sku'],
       description: map['description'],
       urlImage: map['urlImage'],
-      quantity: Quantity(),
+      quantity: Quantity(0),
     );
   }
 

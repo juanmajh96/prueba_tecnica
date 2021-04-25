@@ -14,6 +14,8 @@ void main() {
   HomeRepositoryImpl _repositoryImpl;
   HomeDataSourceMock _datasource;
   ProductModel _productModel;
+
+  Quantity(1);
   setUp(() {
     _productModel = ProductModel();
     _datasource = HomeDataSourceMock();

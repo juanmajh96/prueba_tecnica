@@ -26,8 +26,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
           }
           return OrdersErrorState();
         },
-        (listProducts) async {
-          return OrdersCompleteState(listProducts);
+        (listOrders) async {
+          return OrdersCompleteState(listOrders);
         },
       );
     }
