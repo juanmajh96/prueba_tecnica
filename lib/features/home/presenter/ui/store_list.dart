@@ -26,7 +26,7 @@ class StoreList extends StatelessWidget {
             onTap: () async {
               await Navigator.of(context).push(
                 PageRouteBuilder(
-                  transitionDuration: const Duration(milliseconds: 800),
+                  transitionDuration: const Duration(milliseconds: 500),
                   pageBuilder: (_, animation, __) {
                     return FadeTransition(
                       opacity: animation,
