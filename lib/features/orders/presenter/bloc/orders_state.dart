@@ -22,12 +22,10 @@ class OrdersCompleteState extends OrdersState {
 
 class OrdersErrorState extends OrdersState {
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }
 
 class OrdersNotInternetState extends OrdersState {
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }

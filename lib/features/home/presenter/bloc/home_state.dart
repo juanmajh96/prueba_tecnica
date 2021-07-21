@@ -21,12 +21,10 @@ class HomeCompleteState extends HomeState {
 
 class HomeErrorState extends HomeState {
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }
 
 class HomeNotInternetState extends HomeState {
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }

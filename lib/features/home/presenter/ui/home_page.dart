@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         actions: [
           BlocConsumer<ObjectInCartCubit, ObjectInCartState>(
             listener: (context, state) async {
-              await Future.delayed(const Duration(milliseconds: 650));
+              await Future.delayed(const Duration(milliseconds: 450));
               _objectInCartAdded.changeWidget(
                 ObjectInCartInitial(),
               );

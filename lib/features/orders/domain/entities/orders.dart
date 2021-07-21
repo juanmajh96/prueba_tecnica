@@ -12,6 +12,5 @@ class Orders extends Equatable {
   final List<Product> listProduct;
 
   @override
-  // TODO: implement props
   List<Object> get props => [name, listProduct];
 }

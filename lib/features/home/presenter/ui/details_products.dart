@@ -173,8 +173,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Expanded(
                         flex: 6,
                         child: BlocConsumer<DetailsBloc, DetailsState>(
-                          listener: (context, state) {
+                          listener: (context, state) async {
+                            final _objectInCartCubit =
+                                BlocProvider.of<ObjectInCartCubit>(context,
+                                    listen: false);
                             if (state is DetailsInitial) {
+                              _objectInCartCubit.changeWidget(
+                                ObjectInCartAdded(
+                                    widget.product.urlImage, widget.product.id),
+                              );
+                              await Future.delayed(
+                                  const Duration(milliseconds: 100));
                               Navigator.of(context).pop();
                             }
                           },
@@ -183,9 +192,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               context,
                               listen: false,
                             );
-                            final _objectInCartCubit =
-                                BlocProvider.of<ObjectInCartCubit>(context,
-                                    listen: false);
+
                             final _quantityCubit =
                                 BlocProvider.of<QuantityCubit>(context,
                                     listen: false);
@@ -217,11 +224,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     onPressed: () {
                                       _heroTag.changeHeroTag('Cart');
 
-                                      _objectInCartCubit.changeWidget(
-                                        ObjectInCartAdded(
-                                            widget.product.urlImage,
-                                            widget.product.id),
-                                      );
                                       widget.product.quantity.quantity =
                                           widget.product.quantity.quantity +
                                               _quantityCubit.state;
